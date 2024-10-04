@@ -1,0 +1,242 @@
+openapi: 3.0.0
+
+info:
+  title: Madlibs Template Microservice
+  version: 0.1.0
+
+paths:
+  /:
+    get:
+      tags:
+        - CRUD
+      description: Search the library of templates.
+      parameters:
+        - $ref: '#/components/parameters/QueryAuthor'
+        - $ref: '#/components/parameters/QuerySort'
+        - $ref: '#/components/parameters/QueryTags'
+        - $ref: '#/components/parameters/QueryTitle'
+      responses:
+        200:
+          $ref: '#/components/responses/Ok'
+        404:
+          $ref: '#/components/responses/NoResults'
+        500:
+          $ref: '#/components/responses/ServerSideError'
+
+    post:
+      tags:
+        - CRUD
+      description: Add a new template to the library.
+      requestBody:
+        $ref: '#/components/requestBodies/NewTemplate'
+      responses:
+        200:
+          $ref: '#/components/responses/Ok'
+
+  /{template_id}:
+    delete:
+      tags:
+        - CRUD
+      description:
+        Delete a template from the library. Must be signed into the author
+        account OR have administrator permissions.
+      responses:
+        200:
+          $ref: '#/components/responses/Ok'
+        401:
+          $ref: '#/components/responses/AuthenticationNeeded'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/FileNotFound'
+        500:
+          $ref: '#/components/responses/ServerSideError'
+    put:
+      tags:
+        - CRUD
+      description:
+        Update a template which already exists in the library. Must be signed
+        into the author account.
+        <br /><br />
+        **NOTE:** this cannot be used to
+        change properties such as upvotes, downvotes, etc.
+      responses:
+        200:
+          $ref: '#/components/responses/Ok'
+        401:
+          $ref: '#/components/responses/AuthenticationNeeded'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/FileNotFound'
+        500:
+          $ref: '#/components/responses/ServerSideError'
+  # NOTE: I think for the first version of this app I will leave comments out!
+  # I may even put them in their own microservice.
+  # /comment/{template_id}:
+  #   get:
+  #     tags:
+  #       - comment
+  #     description: Get the comments for a certain template.
+  #     responses:
+  #       200:
+  #         $ref: '#/components/responses/Ok'
+  #   post:
+  #     tags:
+  #       - comment
+  #     description: Add a new comment to a certain template.
+  #     responses:
+  #       200:
+  #         $ref: '#/components/responses/Ok'
+  #   delete:
+  #     tags:
+  #       - comment
+  #     description:
+  #       Delete a comment from a template. Must be signed into the account of the
+  #       author, the commentor, or somebody with administrator permissions.
+  #     responses:
+  #       200:
+  #         $ref: '#/components/responses/Ok'
+  #   put:
+  #     tags:
+  #       - comment
+  #     description:
+  #       Update a comment on a template. Must be signed into the account of the
+  #       commentor.
+  #     responses:
+  #       200:
+  #         $ref: '#/components/responses/Ok'
+  /vote/{template_id}:
+    post:
+      tags:
+        - vote
+      description: Leave a new vote on a template.
+      responses:
+        200:
+          $ref: '#/components/responses/Ok'
+    delete:
+      tags:
+        - vote
+      description: Delete your own previously left vote on a template.
+      responses:
+        200:
+          $ref: '#/components/responses/Ok'
+components:
+  parameters:
+    QueryAuthor:
+      in: query
+      name: author
+      schema:
+        type: string
+      example: author=b1gd3vd0g
+
+    QuerySort:
+      in: query
+      name: sort
+      schema:
+        type: string
+        enum:
+          - chron
+          - rv_chron
+          - alpha
+          - rv_alpha
+          - most_played
+          - most_liked
+
+    QueryTags:
+      in: query
+      name: tags
+      schema:
+        type: string
+      example: tags=SCARY+ADULT+FUNNY
+
+    QueryTitle:
+      in: query
+      name: title
+      schema:
+        type: string
+      example: title="The_Otter_and_the_Bear"
+
+  requestBodies:
+    NewTemplate:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewTemplate'
+
+  responses:
+    AuthenticationNeeded:
+      description: User cannot be authenticated - sign in and try again.
+    FileNotFound:
+      description: The document referenced in the request does not exist.
+    Forbidden:
+      description: The signed in account cannot perform the requested action.
+    NoResults:
+      description: No templates match your query.
+
+    Ok:
+      description: Request completed successfully.
+
+    ServerSideError:
+      description: Request failed due to server side error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ServerSideError'
+
+    TemplatesFetched:
+      description: Templates have been fetched successfully.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TemplateList'
+
+  schemas:
+    NewTemplate:
+      type: object
+      properties:
+        author:
+          type: string
+        title:
+          type: string
+        template:
+          type: string
+      required:
+        - author
+        - title
+        - template
+
+    ServerSideError:
+      type: object
+      properties:
+        message:
+          description: a message to the user describing the error.
+          type: string
+        error:
+          description: the error thrown on the server.
+          type: object
+
+    Template:
+      type: object
+      properties:
+        title:
+          type: string
+        template:
+          type: string
+        upvotes:
+          type: number
+        downvotes:
+          type: number
+        tags:
+          type: array
+          items:
+            type: string
+        author:
+          type: string
+        created:
+          type: string
+
+    TemplateList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Template'
