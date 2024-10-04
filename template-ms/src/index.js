@@ -1,5 +1,4 @@
-
-
+const secrets = require('./secrets');
 const createServer = require('./server');
 
-createServer();
+createServer(secrets.MODE === 'production');
