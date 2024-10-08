@@ -1,5 +1,17 @@
+import { createContext, useState } from 'react';
+
+const LibraryContext = createContext([]);
+
 const Library = () => {
-  return <div className='Library'></div>;
+  const [library, setLibrary] = useState([]);
+
+  return (
+    <LibraryContext.Provider value={{ library, setLibrary }}>
+      <div className='Library'>
+        <h1>Template Library</h1>
+      </div>
+    </LibraryContext.Provider>
+  );
 };
 
 export default Library;
