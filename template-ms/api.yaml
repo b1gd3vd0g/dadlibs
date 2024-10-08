@@ -17,7 +17,7 @@ paths:
         - $ref: '#/components/parameters/QueryTitle'
       responses:
         200:
-          $ref: '#/components/responses/Ok'
+          $ref: '#/components/responses/TemplatesFetched'
         404:
           $ref: '#/components/responses/NoResults'
         500:
@@ -167,10 +167,13 @@ components:
   responses:
     AuthenticationNeeded:
       description: User cannot be authenticated - sign in and try again.
+
     FileNotFound:
       description: The document referenced in the request does not exist.
+
     Forbidden:
       description: The signed in account cannot perform the requested action.
+
     NoResults:
       description: No templates match your query.
 
