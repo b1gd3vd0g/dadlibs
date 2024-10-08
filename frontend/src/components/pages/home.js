@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { LargeButton, LargeLinkButton } from '../reusable';
 import { UserContext } from '../app';
 
