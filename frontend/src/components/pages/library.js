@@ -1,6 +1,8 @@
 import { createContext, useEffect, useState } from 'react';
 import { readTemplates } from '../../api_calls/template_crud';
-import { LargeLinkButton } from '../reusable';
+import { FormGroup, LargeLinkButton, LinkButton } from '../reusable';
+
+import './library.css';
 
 const SearchContext = createContext({});
 
@@ -31,8 +33,7 @@ const Library = () => {
   return (
     <SearchContext.Provider value={{ search, setSearch }}>
       <div className='Library'>
-        <LargeLinkButton to='/'>Back home</LargeLinkButton>
-        <h1>Template Library</h1>
+        <LinkButton to='/'>Back home</LinkButton>
         <LibrarySearchBar />
       </div>
     </SearchContext.Provider>
@@ -42,10 +43,15 @@ const Library = () => {
 const LibrarySearchBar = () => {
   return (
     <div className='LibrarySearchBar'>
-      <h4>Title: </h4>
-      <input type='text' />
-      <h4>Author: </h4>
-      <input type='text' />
+      <h2>Search Dad Libs</h2>
+      <FormGroup
+        label='Title'
+        id='title'
+      />
+      <FormGroup
+        label='Author'
+        id='author'
+      />
       <TagChooser />
       <SearchButton />
     </div>

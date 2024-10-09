@@ -1,0 +1,12 @@
+.Library {
+  display: flex;
+  flex-direction: column;
+}
+
+.LibrarySearchBar {
+  background-color: var(--lightgrey);
+  color: var(--darkgrey);
+  margin: 2.5vmin 15vmin;
+  padding: 5vmin 15vmin;
+  border-radius: 15vmin;
+}
