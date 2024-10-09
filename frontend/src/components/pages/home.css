@@ -1,0 +1,19 @@
+.HomePage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.HomePage #img-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5vmin;
+}
+
+.HomePage #img-box img {
+  max-width: 50vw;
+  max-height: 50vh;
+  display: block;
+  margin: auto;
+}

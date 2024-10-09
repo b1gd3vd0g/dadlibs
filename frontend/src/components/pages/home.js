@@ -2,6 +2,10 @@ import { useContext } from 'react';
 import { LargeButton, LargeLinkButton } from '../reusable';
 import { UserContext } from '../app';
 
+import dadlibsLogo from '../../img/dadlibs_logo.png';
+
+import './home.css';
+
 const HomePage = () => {
   const { user, setUser } = useContext(UserContext);
 
@@ -34,6 +38,10 @@ const HomePage = () => {
 
   return (
     <div className='HomePage'>
+      <div id='img-box'>
+        <img src={dadlibsLogo} />
+        <h4>By b1gd3vd0g</h4>
+      </div>
       <h1>What would you like to do?</h1>
       <LargeLinkButton to='/library'>Browse template library</LargeLinkButton>
       {dependentButtons}
