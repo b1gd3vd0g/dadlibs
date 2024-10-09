@@ -10,6 +10,8 @@ import Login from './pages/login';
 import SignUp from './pages/sign_up';
 import TemplateCreator from './pages/template_creator';
 
+import './app.css';
+
 const UserContext = createContext(null);
 
 const App = () => {
