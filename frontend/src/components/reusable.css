@@ -1,0 +1,57 @@
+button {
+  display: block;
+  padding: 1vmin;
+  border-radius: 1vmin;
+  margin: 2.5vmin;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  background-color: var(--green);
+  color: white;
+  border: none;
+  border-bottom: 1px solid var(--blue);
+  border-right: 1px solid var(--blue);
+}
+
+button:hover {
+  border: none;
+  border-left: 1px solid white;
+  border-top: 1px solid white;
+}
+
+button:active {
+  color: var(--darkgrey);
+}
+
+button.large {
+  padding: 2.5vmin;
+  border-radius: 2.5vmin;
+  margin: 2.5vmin auto;
+  width: 50vw;
+  background-color: var(--blue);
+  color: var(--darkgrey);
+  border-right: 2px solid var(--green);
+  border-bottom: 2px solid var(--green);
+}
+
+button.large:hover {
+  border: none;
+  border-left: 2px solid var(--orange);
+  border-top: 2px solid var(--orange);
+}
+
+button.large:active {
+  border: none;
+  border-left: 2px solid var(--lightgrey);
+  border-top: 2px solid var(--lightgrey);
+  color: var(--orange);
+}
+
+.FormGroup.inline {
+  display: block;
+  padding: 2vmin;
+}
+
+.FormGroup.inline input,
+.FormGroup.inline textarea {
+  float: right;
+}
